@@ -28,7 +28,7 @@ exports.getTask = async (req, res) => {
 exports.getTasks = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
-    const limit = parseInt(req.query.limit) || 4; // Default limit to 4 tasks per page
+    const limit = parseInt(req.query.limit) || 100; // Default limit to 4 tasks per page
 
     const query = buildQuery(req.query, req.user.id);
 
