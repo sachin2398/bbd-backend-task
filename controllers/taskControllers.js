@@ -73,7 +73,7 @@ function buildQuery(queryParams, userId) {
 
 exports.postTask = async (req, res) => {
   try {
-    const { description } = req.body;
+    const { description, deadline } = req.body;
     if (!description) {
       return res
         .status(400)
@@ -83,6 +83,7 @@ exports.postTask = async (req, res) => {
       user: req.user.id,
       description,
       status: "todo",
+      deadline,
     }); // Add status field with default value 'todo'
     res
       .status(200)
@@ -97,7 +98,7 @@ exports.postTask = async (req, res) => {
 
 exports.putTask = async (req, res) => {
   try {
-    const { description, status } = req.body;
+    const { description, status,deadline } = req.body;
 
     if (!description && !status) {
       return res.status(400).json({
@@ -130,6 +131,9 @@ exports.putTask = async (req, res) => {
     if (status) {
       updateFields.status = status;
     }
+     if (deadline) {
+       updateFields.deadline = deadline;
+     }
 
     task = await Task.findByIdAndUpdate(req.params.taskId, updateFields, {
       new: true,
